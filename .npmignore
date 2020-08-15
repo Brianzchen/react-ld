@@ -1,0 +1,13 @@
+# files
+.eslintignore
+.eslintrc.js
+.flowconfig
+.gitignore
+.nvmrc
+babel.config.js
+jest.config.js
+yarn.lock
+
+# folders
+flow-typed/
+src/
