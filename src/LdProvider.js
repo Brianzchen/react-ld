@@ -39,7 +39,7 @@ const LdProvider = ({
     <Provider
       value={{
         async,
-        flags: flags || {},
+        flags,
       }}
     >
       {children}

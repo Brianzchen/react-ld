@@ -86,6 +86,7 @@ This is the simplest way to render a feature flagged component when you don't ne
 | children | React.Node | null | The component to render if the condition is true  |
 | name*  | string | undefined | The name of the feature flag |
 | deprecation  | boolean | false | By default if the flag evaluates to true, the child component will render. But you may want to do the reverse and enable an older version of a feature if the flag is false, which can be done by setting this prop to true |
+| fallback | React.Node | null | If async mode is enabled, fallback will be rendered when the flags have not yet been defined
 
 ### useLdFlag
 
@@ -94,6 +95,7 @@ Alternatively to `LdFeature`, you may want to use hooks instead which can be hel
 | Props  | Type | Default | Description |
 | ------ | ---- | ------- | ----------- |
 | name*  | string | undefined | The name of the feature flag |
+| fallback | boolean | false | If async mode is enabled, fallback will be passed back when the flags have not yet been defined
 
 ### Context
 

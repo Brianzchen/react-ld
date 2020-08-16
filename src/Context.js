@@ -7,7 +7,7 @@ export type FlagsT = {|
 
 export type ContextT = {|
   async: boolean,
-  flags: FlagsT,
+  flags: FlagsT | void,
 |};
 
 const LdContext: React.Context<ContextT> = React.createContext<ContextT>({
