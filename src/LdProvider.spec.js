@@ -50,7 +50,7 @@ describe('useLdFlag', () => {
           callback();
         } else if (key === 'change') {
           callback({
-            enableTest: true,
+            enableTest: { current: true, previous: false },
           });
         }
       },
