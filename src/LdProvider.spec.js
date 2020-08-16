@@ -78,4 +78,19 @@ describe('useLdFlag', () => {
 
     expect(getByTestId('test')).not.toBe(null);
   });
+
+  it('can accept no children', () => {
+    const fakeClient = {
+      on: () => {},
+      allFlags: jest.fn(() => ({})),
+    };
+
+    const { container } = render(
+      <LdProvider
+        client={fakeClient}
+      />,
+    );
+
+    expect(container.textContent).toBe('');
+  });
 });

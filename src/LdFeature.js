@@ -23,6 +23,7 @@ const LdFeature = ({
 
   const isEnabled = flags[feature];
   if (!isEnabled && !deprecation) return null;
+  if (isEnabled && deprecation) return null;
 
   return children;
 };
