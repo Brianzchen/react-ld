@@ -4,6 +4,12 @@ import * as React from 'react';
 import { Provider } from './Context';
 import type { FlagsT } from './Context';
 
+type SettingsT = {|
+  [string]: {|
+    current: boolean, previous: boolean,
+  |},
+|};
+
 type Props = {|
   children?: React.Node,
   client: {
@@ -22,13 +28,23 @@ const LdProvider = ({
   const [flags, setFlags] = React.useState<FlagsT | void>();
 
   React.useEffect(() => {
+    const mapToCurrentFlags = (
+      settings: SettingsT,
+    ) => (
+      Object.keys(settings).reduce((prev, cur: string) => {
+        // eslint-disable-next-line
+        prev[cur] = settings[cur].current;
+        return prev;
+      }, {})
+    );
+
     client.on('ready', () => {
       setFlags(client.allFlags());
     });
-    client.on('change', (settings) => {
+    client.on('change', (settings: SettingsT) => {
       setFlags((pFlags) => ({
         ...pFlags,
-        ...settings,
+        ...mapToCurrentFlags(settings),
       }));
     });
   }, []);
