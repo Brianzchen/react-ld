@@ -7,11 +7,13 @@ import {
   useLdFlag,
 } from '.';
 
+jest.useFakeTimers();
+
 describe('useLdFlag', () => {
   it('renders nothing before loading', () => {
     const fakeClient = {
       on: () => {},
-      allFlags: jest.fn(() => ({})),
+      allFlags: jest.fn(() => ({ test: true })),
     };
 
     const { queryByTestId } = render(
@@ -28,7 +30,7 @@ describe('useLdFlag', () => {
   it('renders tree if nothing has loaded and async mode is enabled', () => {
     const fakeClient = {
       on: () => {},
-      allFlags: jest.fn(() => ({})),
+      allFlags: jest.fn(() => ({ test: true })),
     };
 
     const { getByTestId } = render(
@@ -54,7 +56,7 @@ describe('useLdFlag', () => {
           });
         }
       },
-      allFlags: jest.fn(() => ({})),
+      allFlags: jest.fn(() => ({ test: true })),
     };
 
     const App = () => {
@@ -82,7 +84,7 @@ describe('useLdFlag', () => {
   it('can accept no children', () => {
     const fakeClient = {
       on: () => {},
-      allFlags: jest.fn(() => ({})),
+      allFlags: jest.fn(() => ({ test: true })),
     };
 
     const { container } = render(
@@ -92,5 +94,30 @@ describe('useLdFlag', () => {
     );
 
     expect(container.textContent).toBe('');
+  });
+
+  it('will keep waiting until flags are returned', () => {
+    const fakeClient = {
+      on: () => {},
+      allFlags: jest.fn(),
+    };
+    fakeClient.allFlags
+      .mockReturnValueOnce({})
+      .mockReturnValueOnce({ test: true });
+
+    const { container } = render(
+      <LdProvider
+        client={fakeClient}
+      >
+        <div>
+          loaded
+        </div>
+      </LdProvider>,
+    );
+
+    expect(container.textContent).toBe('');
+    jest.advanceTimersByTime(1);
+    expect(container.textContent).toBe('loaded');
+    jest.advanceTimersByTime(1);
   });
 });

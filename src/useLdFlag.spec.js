@@ -7,6 +7,8 @@ import {
   useLdFlag,
 } from '.';
 
+jest.useFakeTimers();
+
 describe('useLdFlag', () => {
   it('returns fallback value when no flag exists', () => {
     const fakeClient = {
@@ -15,7 +17,7 @@ describe('useLdFlag', () => {
           callback();
         }
       },
-      allFlags: jest.fn(() => ({})),
+      allFlags: jest.fn(() => ({ test: true })),
     };
     const App = () => {
       const enableTest = useLdFlag('enableTest', true);
@@ -68,6 +70,8 @@ describe('useLdFlag', () => {
         <App />
       </LdProvider>,
     );
+
+    jest.advanceTimersByTime(1000);
 
     expect(getByTestId('element').textContent).toBe('true');
   });

@@ -3,7 +3,7 @@ Pass Launch Darkly feature flags through your React application.
 
 Takes a Launch Darkly instantiated client in a provider and enables easy access to feature flags throughout your React application.
 
-Most Launch Darkly React libraries instantiate the client inside the React component. This gives an application less flexibility and control, which can impose constraints given the API provided by the library and you can't pass the client around your application if you have that need in a scaled application.
+Most Launch Darkly React libraries instantiate the client inside the React component. This gives an application less flexibility and control, which can impose constraints given the API provided by the library and you can't pass the client around your application if you have the need in a scaled application.
 
 > This library handles just the React part so you don't have to.
 

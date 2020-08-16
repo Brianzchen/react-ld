@@ -7,6 +7,8 @@ import {
   LdFeature,
 } from '.';
 
+jest.useFakeTimers();
+
 describe('<LdFeature', () => {
   it('renders the feature only when true', () => {
     const fakeClient = {
@@ -42,6 +44,8 @@ describe('<LdFeature', () => {
         <App />
       </LdProvider>,
     );
+
+    jest.advanceTimersByTime(1000);
 
     expect(getByTestId('element').textContent).toBe('enabled feature');
   });
@@ -80,6 +84,8 @@ describe('<LdFeature', () => {
         <App />
       </LdProvider>,
     );
+
+    jest.advanceTimersByTime(1000);
 
     expect(getByTestId('element').textContent).toBe('disabled feature');
   });

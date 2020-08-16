@@ -38,9 +38,17 @@ const LdProvider = ({
       }, {})
     );
 
-    client.on('ready', () => {
-      setFlags(client.allFlags());
-    });
+    // Use setInterval instead of on('ready') because in between
+    // setting up the client and creating the react tree
+    // The ready function could have already been called.
+    // This would be expected if the React tree is lazy loaded.
+    const readyInterval = setInterval(() => {
+      const allFlags = client.allFlags();
+      if (Object.keys(allFlags).length > 0) {
+        clearInterval(readyInterval);
+        setFlags(allFlags);
+      }
+    }, 0);
     client.on('change', (settings: SettingsT) => {
       setFlags((pFlags) => ({
         ...pFlags,
