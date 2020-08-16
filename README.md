@@ -54,12 +54,14 @@ import React from 'react';
 import { LdFeature } from 'react-ld';
 
 const SomeComponent = () => (
-  <LdFeature>
-    <VariationA>
-  </LdFeature>
-  <LdFeature deprecation>
-    <VariationB>
-  </LdFeature>
+  <>
+    <LdFeature>
+      <VariationA>
+    </LdFeature>
+    <LdFeature deprecation>
+      <VariationB>
+    </LdFeature>
+  </>
 );
 ```
 
@@ -77,8 +79,32 @@ Top level provider component that will cascade feature flags through your React 
 
 ### LdFeature
 
+This is the simplest way to render a feature flagged component when you don't need any extra logic.
+
+| Props  | Type | Default | Description |
+| ------ | ---- | ------- | ----------- |
+| children | React.Node | null | The component to render if the condition is true  |
+| name*  | string | undefined | The name of the feature flag |
+| deprecation  | boolean | false | By default if the flag evaluates to true, the child component will render. But you may want to do the reverse and enable an older version of a feature if the flag is false, which can be done by setting this prop to true |
+
 ### useLdFlag
+
+Alternatively to `LdFeature`, you may want to use hooks instead which can be helpful when you want to decide if you want to render a feature programmatically or you want to evaluate multiple flags together instead of nesting a large tree of components.
+
+| Props  | Type | Default | Description |
+| ------ | ---- | ------- | ----------- |
+| name*  | string | undefined | The name of the feature flag |
 
 ### Context
 
 For advanced usage or building your own functionality, `react-ld` exposes it's underlying context so you can build your own utilities if necessary.
+
+```js
+// Context structure
+{
+  async: boolean,
+  flags: {
+    [string]: boolean,
+  },
+}
+```
