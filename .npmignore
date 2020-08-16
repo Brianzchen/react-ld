@@ -5,6 +5,7 @@
 .gitignore
 .nvmrc
 babel.config.js
+configureTests.js
 jest.config.js
 yarn.lock
 

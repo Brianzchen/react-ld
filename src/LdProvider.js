@@ -55,6 +55,10 @@ const LdProvider = ({
         ...mapToCurrentFlags(settings),
       }));
     });
+
+    return () => {
+      clearInterval(readyInterval);
+    };
   }, []);
 
   if (!flags && !async) return null;
