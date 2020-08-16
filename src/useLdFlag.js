@@ -5,8 +5,9 @@ import LdContext from './Context';
 
 export default function useLdFlag(name: string, fallback?: boolean = false): boolean {
   const { flags } = React.useContext(LdContext);
+  const feature = flags?.[name];
 
-  if (!flags) return fallback;
+  if (typeof feature === 'undefined') return fallback;
 
-  return flags?.[name];
+  return feature;
 }

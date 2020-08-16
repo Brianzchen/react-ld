@@ -84,7 +84,7 @@ This is the simplest way to render a feature flagged component when you don't ne
 | Props  | Type | Default | Description |
 | ------ | ---- | ------- | ----------- |
 | children | React.Node | null | The component to render if the condition is true  |
-| name*  | string | undefined | The name of the feature flag |
+| feature*  | string | undefined | The name of the feature flag |
 | deprecation  | boolean | false | By default if the flag evaluates to true, the child component will render. But you may want to do the reverse and enable an older version of a feature if the flag is false, which can be done by setting this prop to true |
 | fallback | React.Node | null | If async mode is enabled, fallback will be rendered when the flags have not yet been defined
 

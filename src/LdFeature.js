@@ -5,14 +5,14 @@ import Context from './Context';
 
 type Props = {|
   children?: React.Node,
-  name: string,
+  feature: string,
   deprecation?: boolean,
   fallback?: React.Node,
 |};
 
 const LdFeature = ({
   children = null,
-  name,
+  feature,
   deprecation = false,
   fallback = null,
 }: Props): React.Node => {
@@ -21,7 +21,7 @@ const LdFeature = ({
 
   if (!flags) return fallback;
 
-  const isEnabled = flags[name];
+  const isEnabled = flags[feature];
   if (!isEnabled && !deprecation) return null;
 
   return children;
