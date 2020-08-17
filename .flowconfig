@@ -1,0 +1,16 @@
+[ignore]
+.*node_modules/.*
+!.*node_modules/@.*
+
+[include]
+
+[libs]
+
+[lints]
+ambiguous-object-type=error
+
+[options]
+esproposal.optional_chaining=enable
+types_first=true
+
+[strict]
