@@ -1,8 +1,8 @@
 {
   "name": "react-ld",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Connects a Launch Darkly client with a react tree",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "repository": "git@github.com:Tabcorp/react-ld.git",
   "author": "Tabcorp",
   "license": "MIT",

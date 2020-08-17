@@ -10,5 +10,7 @@ jest.config.js
 yarn.lock
 
 # folders
+.github
+coverage
 flow-typed/
 src/
