@@ -12,7 +12,7 @@ type SettingsT = {|
 
 type Props = {|
   children?: React.Node,
-  client: {
+  client?: {
     on: (string, Function) => void,
     allFlags: () => FlagsT,
     ...
@@ -28,6 +28,8 @@ const LdProvider = ({
   const [flags, setFlags] = React.useState<FlagsT | void>();
 
   React.useEffect(() => {
+    if (!client) return () => {};
+
     const mapToCurrentFlags = (
       settings: SettingsT,
     ) => (
@@ -59,7 +61,7 @@ const LdProvider = ({
     return () => {
       clearInterval(readyInterval);
     };
-  }, []);
+  }, [client]);
 
   if (!flags && !async) return null;
 

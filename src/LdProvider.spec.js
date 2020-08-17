@@ -120,4 +120,20 @@ describe('useLdFlag', () => {
     expect(container.textContent).toBe('loaded');
     jest.advanceTimersByTime(1);
   });
+
+  it('does not try to get flags if no client is provided', () => {
+    const originalSetInterval = window.setInterval;
+    window.setInterval = jest.fn();
+    const { container } = render(
+      <LdProvider>
+        <div>
+          loaded
+        </div>
+      </LdProvider>,
+    );
+
+    expect(container.textContent).toBe('');
+    expect(window.setInterval).not.toHaveBeenCalled();
+    window.setInterval = originalSetInterval;
+  });
 });
