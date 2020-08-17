@@ -21,7 +21,7 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-  
+
     - name: Setup Node.js environment
       uses: actions/setup-node@v1.4.3
       with:
@@ -30,10 +30,9 @@ jobs:
 
     - uses: CultureHQ/actions-yarn@v1.0.1
 
-    # Runs a single command using the runners shell
     - name: Tests
       run: |
-        yarn install,
+        yarn install
         yarn eslint .
         yarn flow
         yarn test

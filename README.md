@@ -55,10 +55,10 @@ import { LdFeature } from 'react-ld';
 
 const SomeComponent = () => (
   <>
-    <LdFeature>
+    <LdFeature feature="myFeature">
       <VariationA>
     </LdFeature>
-    <LdFeature deprecation>
+    <LdFeature feature="myFeature" deprecation>
       <VariationB>
     </LdFeature>
   </>
