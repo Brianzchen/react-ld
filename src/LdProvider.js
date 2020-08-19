@@ -15,6 +15,7 @@ type Props = {|
   client?: {
     on: (string, Function) => void,
     allFlags: () => FlagsT,
+    waitForInitialization: () => Promise<void>,
     ...
   },
   async?: boolean,
@@ -28,7 +29,7 @@ const LdProvider = ({
   const [flags, setFlags] = React.useState<FlagsT | void>();
 
   React.useEffect(() => {
-    if (!client) return () => {};
+    if (!client) return;
 
     const mapToCurrentFlags = (
       settings: SettingsT,
@@ -40,27 +41,15 @@ const LdProvider = ({
       }, {})
     );
 
-    // Use setInterval instead of on('ready') because in between
-    // setting up the client and creating the react tree
-    // The ready function could have already been called.
-    // This would be expected if the React tree is lazy loaded.
-    const readyInterval = setInterval(() => {
-      const allFlags = client.allFlags();
-      if (Object.keys(allFlags).length > 0) {
-        clearInterval(readyInterval);
-        setFlags(allFlags);
-      }
-    }, 0);
+    client.waitForInitialization().then(() => {
+      setFlags(client.allFlags());
+    });
     client.on('change', (settings: SettingsT) => {
       setFlags((pFlags) => ({
         ...pFlags,
         ...mapToCurrentFlags(settings),
       }));
     });
-
-    return () => {
-      clearInterval(readyInterval);
-    };
   }, [client]);
 
   if (!flags && !async) return null;
