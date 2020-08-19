@@ -7,13 +7,16 @@ import {
   useLdFlag,
 } from '.';
 
-jest.useFakeTimers();
-
 describe('useLdFlag', () => {
   it('renders nothing before loading', () => {
+    const hook = jest.fn();
     const fakeClient = {
       on: () => {},
       allFlags: jest.fn(() => ({ test: true })),
+      waitForInitialization: jest.fn(() => new Promise((resolve) => {
+        resolve();
+        hook();
+      })),
     };
 
     const { queryByTestId } = render(
@@ -31,6 +34,7 @@ describe('useLdFlag', () => {
     const fakeClient = {
       on: () => {},
       allFlags: jest.fn(() => ({ test: true })),
+      waitForInitialization: jest.fn(() => Promise.resolve()),
     };
 
     const { getByTestId } = render(
@@ -57,6 +61,7 @@ describe('useLdFlag', () => {
         }
       },
       allFlags: jest.fn(() => ({ test: true })),
+      waitForInitialization: jest.fn(() => Promise.resolve()),
     };
 
     const App = () => {
@@ -72,7 +77,6 @@ describe('useLdFlag', () => {
     const { getByTestId } = render(
       <LdProvider
         client={fakeClient}
-        async
       >
         <App />
       </LdProvider>,
@@ -85,6 +89,7 @@ describe('useLdFlag', () => {
     const fakeClient = {
       on: () => {},
       allFlags: jest.fn(() => ({ test: true })),
+      waitForInitialization: jest.fn(() => Promise.resolve()),
     };
 
     const { container } = render(
@@ -96,34 +101,7 @@ describe('useLdFlag', () => {
     expect(container.textContent).toBe('');
   });
 
-  it('will keep waiting until flags are returned', () => {
-    const fakeClient = {
-      on: () => {},
-      allFlags: jest.fn(),
-    };
-    fakeClient.allFlags
-      .mockReturnValueOnce({})
-      .mockReturnValueOnce({ test: true });
-
-    const { container } = render(
-      <LdProvider
-        client={fakeClient}
-      >
-        <div>
-          loaded
-        </div>
-      </LdProvider>,
-    );
-
-    expect(container.textContent).toBe('');
-    jest.advanceTimersByTime(1);
-    expect(container.textContent).toBe('loaded');
-    jest.advanceTimersByTime(1);
-  });
-
   it('does not try to get flags if no client is provided', () => {
-    const originalSetInterval = window.setInterval;
-    window.setInterval = jest.fn();
     const { container } = render(
       <LdProvider>
         <div>
@@ -133,7 +111,5 @@ describe('useLdFlag', () => {
     );
 
     expect(container.textContent).toBe('');
-    expect(window.setInterval).not.toHaveBeenCalled();
-    window.setInterval = originalSetInterval;
   });
 });

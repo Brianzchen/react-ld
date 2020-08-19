@@ -1,13 +1,11 @@
 // @flow
 import * as React from 'react';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 
 import {
   LdProvider,
   useLdFlag,
 } from '.';
-
-jest.useFakeTimers();
 
 describe('useLdFlag', () => {
   it('returns fallback value when no flag exists', () => {
@@ -17,7 +15,8 @@ describe('useLdFlag', () => {
           callback();
         }
       },
-      allFlags: jest.fn(() => ({ test: true })),
+      allFlags: jest.fn(() => ({})),
+      waitForInitialization: jest.fn(() => Promise.resolve()),
     };
     const App = () => {
       const enableTest = useLdFlag('enableTest', true);
@@ -41,7 +40,8 @@ describe('useLdFlag', () => {
     expect(getByTestId('element').textContent).toBe('true');
   });
 
-  it('returns the field when flag is populated', () => {
+  it('returns the field when flag is populated', (done) => {
+    const hook = jest.fn();
     const fakeClient = {
       on: (key, callback) => {
         if (key === 'ready') {
@@ -50,6 +50,10 @@ describe('useLdFlag', () => {
       },
       allFlags: jest.fn(() => ({
         enableTest: true,
+      })),
+      waitForInitialization: jest.fn(() => new Promise((resolve) => {
+        resolve();
+        hook();
       })),
     };
     const App = () => {
@@ -62,7 +66,7 @@ describe('useLdFlag', () => {
       );
     };
 
-    const { getByTestId } = render(
+    const wrapper = render(
       <LdProvider
         client={fakeClient}
         async
@@ -71,11 +75,9 @@ describe('useLdFlag', () => {
       </LdProvider>,
     );
 
-    jest.advanceTimersByTime(1000);
-
-    expect(getByTestId('element').textContent).toBe('true');
-  });
-
-  it('does not rerender hook when a different flag is changed', () => {
+    waitFor(() => expect(hook).toHaveBeenCalled()).then(() => {
+      expect(wrapper.getByTestId('element').textContent).toBe('true');
+      done();
+    });
   });
 });
