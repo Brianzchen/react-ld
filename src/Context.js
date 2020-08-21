@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 export type FlagsT = {|
-  [string]: boolean,
+  [string]: any,
 |}
 
 export type ContextT = {|
