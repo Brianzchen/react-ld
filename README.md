@@ -88,6 +88,30 @@ This is the simplest way to render a feature flagged component when you don't ne
 | deprecation  | boolean | false | By default if the flag evaluates to true, the child component will render. But you may want to do the reverse and enable an older version of a feature if the flag is false, which can be done by setting this prop to true |
 | fallback | React.Node | null | If async mode is enabled, fallback will be rendered when the flags have not yet been defined
 
+### LdMultivariate
+
+If your flag returns you a multivariate value, you can use this component instead of LdFeature. Which instead of rendering `React.Node` as the children, it instead expects a function that will be passed the multivariate value.
+
+```js
+return (
+  <LdMultivariate feature="my-feature">
+    {(variation) => {
+      if (variation === 'yes') return <YesComp />
+      if (variation === 'no') return <NoComp />
+      return <MaybeComp />
+    }}
+  </LdMultivariate>
+)
+```
+
+children: (variation: any) => React.Node,
+  feature: string,
+
+| Props  | Type | Default | Description |
+| ------ | ---- | ------- | ----------- |
+| children* | (variation: any) => React.Node | undefined | Render prop that will be passed the resulting variation that expects a React component to be returned  |
+| feature*  | string | undefined | The name of the feature flag |
+
 ### useLdFlag
 
 Alternatively to `LdFeature`, you may want to use hooks instead which can be helpful when you want to decide if you want to render a feature programmatically or you want to evaluate multiple flags together instead of nesting a large tree of components.
