@@ -114,7 +114,7 @@ children: (variation: any) => React.Node,
 
 ### useLdFlag
 
-Alternatively to `LdFeature`, you may want to use hooks instead which can be helpful when you want to decide if you want to render a feature programmatically or you want to evaluate multiple flags together instead of nesting a large tree of components.
+Alternatively to `LdFeature` or `LdMultivariate`, you may want to use hooks instead which can be helpful when you want to decide if you want to render a feature programmatically or you want to evaluate multiple flags together instead of nesting a large tree of components.
 
 | Props  | Type | Default | Description |
 | ------ | ---- | ------- | ----------- |
