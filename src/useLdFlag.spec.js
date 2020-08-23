@@ -81,7 +81,7 @@ describe('useLdFlag', () => {
     });
   });
 
-  it('it can return multivariate value', (done) => {
+  it('can return multivariate value', (done) => {
     const hook = jest.fn();
     const fakeClient = {
       on: (key, callback) => {
