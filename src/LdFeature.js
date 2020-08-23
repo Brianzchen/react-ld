@@ -21,7 +21,7 @@ const LdFeature = ({
 
   if (!flags) return fallback;
 
-  const isEnabled = flags[feature];
+  const isEnabled = !!flags[feature];
   if (!isEnabled && !deprecation) return null;
   if (isEnabled && deprecation) return null;
 
