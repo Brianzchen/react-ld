@@ -9,6 +9,9 @@ const config = {
     '@babel/preset-react',
     '@babel/preset-flow',
   ],
+  plugins: [
+    '@babel/plugin-transform-modules-commonjs',
+  ],
 };
 
 if (process.env.NODE_ENV !== 'test') {
