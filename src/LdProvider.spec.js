@@ -112,4 +112,59 @@ describe('useLdFlag', () => {
 
     expect(container.textContent).toBe('');
   });
+
+  it('returns a list of mock flags', () => {
+    const App = () => {
+      const enableTest = useLdFlag('enableTest');
+
+      return (
+        <div data-testid="test">
+          {enableTest ? 'true' : 'false'}
+        </div>
+      );
+    };
+
+    const flags = {
+      enableTest: true,
+      notEnabledTest: false,
+    };
+
+    const { getByTestId } = render(
+      <LdProvider
+        stubbedFlags={flags}
+      >
+        <App />
+      </LdProvider>,
+    );
+
+    expect(getByTestId('test').textContent).toBe('true');
+  });
+
+  it('ignores client when mock flags are passed', () => {
+    const App = () => {
+      const enableTest = useLdFlag('enableTest');
+
+      return (
+        <div data-testid="test">
+          {enableTest ? 'true' : 'false'}
+        </div>
+      );
+    };
+
+    const flags = {
+      enableTest: true,
+      notEnabledTest: false,
+    };
+
+    const { getByTestId } = render(
+      <LdProvider
+        stubbedFlags={flags}
+        client={({}: any)}
+      >
+        <App />
+      </LdProvider>,
+    );
+
+    expect(getByTestId('test').textContent).toBe('true');
+  });
 });
