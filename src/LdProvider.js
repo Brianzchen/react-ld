@@ -45,7 +45,7 @@ const LdProvider = ({
       setFlags(client.allFlags());
     });
     client.on('change', (settings: SettingsT) => {
-      setFlags((pFlags: SettingsT) => ({
+      setFlags((pFlags) => ({
         ...pFlags,
         ...mapToCurrentFlags(settings),
       }));

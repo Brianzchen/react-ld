@@ -10,7 +10,5 @@
 ambiguous-object-type=error
 
 [options]
-esproposal.optional_chaining=enable
-types_first=true
 
 [strict]
