@@ -76,6 +76,7 @@ Top level provider component that will cascade feature flags through your React 
 | children | React.Node | null | The react tree that will read flag values  |
 | client*  | instaceof LD client | undefined | The LD client instantiated with settings of your choice |
 | async  | boolean | false | By default `LDProvider` will wait for the client to be ready before rendering the React tree. Enabling async mode will ignore the client status and render the tree immediately |
+| stubbedFlags | { [key: string]: any } | undefined | Accepts an object of properties that will override what may be provided by an LD client and instead pass the values of the object as the flags
 
 ### LdFeature
 
